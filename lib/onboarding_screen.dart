@@ -66,6 +66,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: SmoothPageIndicator(
                 controller: controller,
                 count: 4,
+                effect: WormEffect(
+                  spacing: 16,
+                  dotColor: Colors.black26,
+                  activeDotColor: Colors.teal.shade700),
               ),
             ),
             TextButton(
