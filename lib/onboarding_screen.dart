@@ -59,7 +59,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextButton(
-              onPressed: () {},
+              onPressed: () => controller.jumpToPage(3),
               child: const Text('SKIP'),
             ),
             Center(
@@ -67,13 +67,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 controller: controller,
                 count: 4,
                 effect: WormEffect(
-                  spacing: 16,
-                  dotColor: Colors.black26,
-                  activeDotColor: Colors.teal.shade700),
+                    spacing: 16,
+                    dotColor: Colors.black26,
+                    activeDotColor: Colors.teal.shade700),
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () => controller.nextPage(
+                  duration: const Duration(microseconds: 500),
+                  curve: Curves.bounceInOut),
               child: const Text('NEXT'),
             ),
           ],
