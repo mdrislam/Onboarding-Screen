@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  OnboardingScreen({Key? key}) : super(key: key);
+  const OnboardingScreen({Key? key}) : super(key: key);
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -10,6 +10,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final controller = PageController();
+  bool isLast = false;
   @override
   void dispose() {
     controller.dispose();
@@ -24,30 +25,43 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         padding: const EdgeInsets.only(bottom: 80.0),
         child: PageView(
           controller: controller,
+          onPageChanged: (index) {
+            setState(() {
+              if (index == 3) {
+                isLast = true;
+              } else {
+                isLast = false;
+              }
+            });
+          },
           children: [
-            Container(
-              color: Colors.red,
-              child: const Center(
-                child: Text('Page 1'),
-              ),
+            buildPage(
+              color: Colors.green.shade100,
+              urlImage: 'assets/images/page.jpg',
+              title: 'REDUCE',
+              subtitle:
+                  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
             ),
-            Container(
-              color: Colors.green,
-              child: const Center(
-                child: Text('Page 2'),
-              ),
+            buildPage(
+              color: Colors.green.shade100,
+              urlImage: 'assets/images/page.jpg',
+              title: 'REDUCE',
+              subtitle:
+                  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
             ),
-            Container(
-              color: const Color.fromARGB(255, 85, 69, 238),
-              child: const Center(
-                child: Text('Page 3'),
-              ),
+            buildPage(
+              color: Colors.green.shade100,
+              urlImage: 'assets/images/page.jpg',
+              title: 'REDUCE',
+              subtitle:
+                  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
             ),
-            Container(
-              color: const Color.fromARGB(255, 27, 176, 245),
-              child: const Center(
-                child: Text('Page 4'),
-              ),
+            buildPage(
+              color: Colors.green.shade100,
+              urlImage: 'assets/images/page.jpg',
+              title: 'REDUCE',
+              subtitle:
+                  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
             ),
           ],
         ),
@@ -70,16 +84,59 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     spacing: 16,
                     dotColor: Colors.black26,
                     activeDotColor: Colors.teal.shade700),
+                onDotClicked: (index) => controller.animateToPage(index,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeIn),
               ),
             ),
             TextButton(
               onPressed: () => controller.nextPage(
-                  duration: const Duration(microseconds: 500),
-                  curve: Curves.bounceInOut),
-              child: const Text('NEXT'),
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOut),
+              child: isLast? const Text('NEXT',style: TextStyle(color: Colors.grey),):const Text('NEXT'),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Container buildPage(
+      {required Color color,
+      required String urlImage,
+      required String title,
+      required String subtitle}) {
+    return Container(
+      color: color,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            urlImage,
+            fit: BoxFit.cover,
+            width: double.infinity,
+          ),
+          const SizedBox(
+            height: 64,
+          ),
+          Text(
+            title,
+            style: TextStyle(
+                color: Colors.teal.shade700,
+                fontSize: 32,
+                fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 64,
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              subtitle,
+              style: const TextStyle(color: Colors.black),
+            ),
+          )
+        ],
       ),
     );
   }
